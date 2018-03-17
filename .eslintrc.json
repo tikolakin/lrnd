@@ -1,13 +1,10 @@
 {
   "extends": "airbnb-base",
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "moduleDirectory": [
-          "node_modules",
-          "/Users/tikolakin/work/learnjs/node_modules"
-        ]
-      }
-    }
+  "env": {
+    "node": true,
+    "mocha": true
+  },
+  "rules": {
+    "mocha/no-exclusive-tests": "error"
   }
 }
