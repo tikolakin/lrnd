@@ -140,7 +140,7 @@ describe('Web Server', () => {
             }
             reject(new Error('File exists'));
           });
-        }, 0);
+        }, 10);
       });
     });
   });
@@ -178,7 +178,7 @@ describe('Web Server', () => {
             }
             reject(new Error('File exists'));
           });
-        }, 0);
+        }, 10);
       });
     });
 
