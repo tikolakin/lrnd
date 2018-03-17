@@ -21,20 +21,25 @@ process.on('rejectionHandled', (promise) => {
 });
 
 describe('Web Server', () => {
-  beforeEach(() => {
-    // clean directory
-  });
 
   describe('File access', () => {
-    it('should return index.html file', () => {
-      const content = fs.readFileSync('./public/index.html', {
-        encoding: 'utf-8',
+    it('should return index.html file', async () => {
+      let fileContent = '';
+      await new Promise((resolve, reject) => {
+        fs.readFile('./public/index.html', { encoding: 'utf-8' }, (err, content) => {
+          if (err) reject(err);
+          fileContent = content;
+          resolve();
+        });
       });
 
-      return request(server)
+      await request(server)
         .get('/')
         .expect('Content-Type', 'text/html')
-        .expect(200, content);
+        .expect(200)
+        .then((res) => {
+          assert.equal(res.text, fileContent);
+        });
     });
 
     describe('file exists', () => {
@@ -49,7 +54,7 @@ describe('Web Server', () => {
         .then(done()));
 
       it('should return existing file', async () => {
-        request(server)
+        await request(server)
           .get(`/${file}`)
           .expect(200)
           .then((res) => {
@@ -59,7 +64,7 @@ describe('Web Server', () => {
     });
 
     it('should respond with page not found', async () => {
-      request(server)
+      await request(server)
         .get('/../index.html')
         .expect(404);
     });
@@ -91,14 +96,14 @@ describe('Web Server', () => {
     });
 
     it('should prevent uploading big files', async () => {
-      request(server)
+      await request(server)
         .post(`/${file}`)
         .set('Content-Length', `${config.get('limitFileSize') + 10}`)
         .expect(413);
     });
 
     it('should restrict saving big files', async () => {
-      request(server)
+      await request(server)
         .post(`/${file}`)
         .set('Content-Length', `${10}`)
         .send(`${config.get('limitFileSize') * 10}`)
@@ -113,7 +118,7 @@ describe('Web Server', () => {
         });
       });
 
-      request(server)
+      await request(server)
         .post(`/${file}`)
         .expect(409)
         .then((res) => {
@@ -183,7 +188,7 @@ describe('Web Server', () => {
     });
 
     it('should respond on file doesn\'t exists', async () => {
-      request(server)
+      await request(server)
         .delete('/nofile')
         .expect(404);
     });
