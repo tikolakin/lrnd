@@ -1,0 +1,4 @@
+http://javascript.info/async-await
+
+переписать тесты на async/await
+read-stream-task*
