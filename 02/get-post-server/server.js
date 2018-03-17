@@ -63,11 +63,10 @@ function handleAddUpdate(pathname, req, res) {
   const filePath = path.normalize(path.join(config.get('filesRoot'), pathname));
 
   if (req.method === 'POST') {
-    debugger;
     let size = 0;
     const fileStream = fs.createWriteStream(filePath, { flags: 'wx' });
 
-    let gotData = function(chunk) {
+    const gotData = function (chunk) {
       size += chunk.length;
       if (size > config.get('limitFileSize')) {
         // fail fast

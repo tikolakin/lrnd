@@ -18,7 +18,7 @@
   "dependencies": {
     "aws-sdk": "*",
     "bunyan": "*",
-    "clarify": "*",
+    "clarify": "^2.1.0",
     "co-busboy": "*",
     "config": "*",
     "expect": "*",
@@ -64,7 +64,7 @@
     "socket.io": "*",
     "socket.io-emitter": "*",
     "socket.io-redis": "*",
-    "trace": "*",
+    "trace": "^3.1.0",
     "uuid4": "*",
     "yargs": "^11.1.0"
   }

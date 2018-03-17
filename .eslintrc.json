@@ -5,6 +5,6 @@
     "mocha": true
   },
   "rules": {
-    "mocha/no-exclusive-tests": "error"
+    "import/no-extraneous-dependencies": "off"
   }
 }
