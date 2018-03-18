@@ -45,13 +45,12 @@ describe('Web Server', () => {
     describe('file exists', () => {
       const file = Math.random().toString(36).substring(7);
 
-      before(done => new Promise((resolve, reject) => {
+      before(async () => new Promise((resolve, reject) => {
         fs.writeFile(`./files/${file}`, 'tikolakin', (err) => {
           if (err) reject(err);
           resolve();
         });
-      })
-        .then(done()));
+      }));
 
       it('should return existing file', async () => {
         await request(server)
@@ -73,9 +72,8 @@ describe('Web Server', () => {
   describe('File upload', () => {
     let file = '';
 
-    beforeEach((done) => {
+    beforeEach(async () => {
       file = Math.random().toString(36).substring(7);
-      done();
     });
 
     it('should upload file', async () => {
@@ -153,9 +151,8 @@ describe('Web Server', () => {
   describe('File edit', () => {
     let file = '';
 
-    beforeEach((done) => {
+    beforeEach(async () => {
       file = Math.random().toString(36).substring(7);
-      done();
     });
 
     it('should delete existing file', async () => {
