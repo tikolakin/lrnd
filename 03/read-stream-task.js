@@ -1,21 +1,31 @@
 const fs = require('fs');
-
 // хотим читать данные из потока в цикле
 
 function readStream(stream) {
+  stream.on('error', err => Promise.reject(err));
 
+  return function () {
+    return new Promise((resolve) => {
+      stream.resume();
+      stream.once('data', (chunk) => {
+        stream.pause();
+        resolve(chunk);
+      });
+    })
+      .catch((err) => { throw err; });
+  };
 }
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 async function read(path) {
 
-  let stream = fs.createReadStream(path, {highWaterMark: 60, encoding: 'utf-8'});
+  const stream = fs.createReadStream(path, { highWaterMark: 60, encoding: 'utf-8' });
 
   let data;
 
   // ЗАДАЧА: написать такой readStream
-  let reader = readStream(stream);
+  const reader = readStream(stream);
 
   while(data = await reader()) {
     console.log(data);
@@ -23,7 +33,7 @@ async function read(path) {
     await sleep(500);
   }
 
-});
+};
 
 read(__filename).catch(console.error);
 
