@@ -7,12 +7,15 @@ let clients = [];
 http.createServer((req, res) => {
 
   switch (req.method + ' ' + req.url) {
-  case 'GET /':
+    case 'GET /':
+    // 1. handle reading error
     fs.createReadStream('index.html').pipe(res);
     break;
 
-  case 'GET /subscribe':
+    case 'GET /subscribe':
+    // 2. Remove res if client closed connection
     console.log("subscribe");
+    // 6. confirm subscribtion ok and keep alive
     clients.push(res);
     break;
 
@@ -20,10 +23,14 @@ http.createServer((req, res) => {
     let body = '';
 
     req
+    // 3. on('error')
+    // 4. validate data
+    // 7 . don't store local data but pipe to susbscribers
       .on('data', data => {
         body += data;
       })
       .on('end', () => {
+        // 5. handle bad JSON body
         body = JSON.parse(body);
 
         console.log("publish '%s'", body.message);
