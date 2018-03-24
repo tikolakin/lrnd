@@ -13,6 +13,14 @@ router.get('/', async (ctx, next) => {
 
 app.use(router.routes());
 
-const server = app.listen(config.get('port')).on('error', err => console.error(err));
+
+
+
+const PORT = config.get('port');
+
+const server = app.listen(PORT, () => {
+  console.log(`Server runs at http://localhost:${PORT}`);
+})
+  .on('error', err => console.error(err));
 
 module.exports = server;

@@ -1,6 +1,6 @@
 const request = require('supertest');
 const server = require('../server');
-const expect = require('expect');
+const should = require('chai').should();
 
 afterEach(() => {
   server.close();
@@ -10,8 +10,8 @@ describe('chat', async () => {
   describe('webform', () => {
     it('should serve webform', async () => {
       const response = await request(server).get('/');
-      expect(response.status).toEqual(200);
-      expect(response.type).toEqual('text/html');
+      response.status.should.equal(200);
+      response.type.should.equal('text/html');
     });
     it('should send message');
     it('should show sent message');
