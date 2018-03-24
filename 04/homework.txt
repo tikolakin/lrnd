@@ -1,0 +1,4 @@
+реализовать чат (long pooling) из 03/chat на koajs
+
+Основы MongoDB
+https://web.archive.org/web/20170915231355/http://jsman.ru/mongo-book/Glava-1-Osnovy.html
