@@ -1,26 +1,13 @@
-const config = require('config');
-
-const Koa = require('koa');
-const app = new Koa();
-
-const Router = require('koa-router');
-const router = new Router();
+const app = require('./app');
+const PORT = require('config').get('port');
 
 
-router.get('/', async (ctx, next) => {
-  ctx.body = { hello: 'World!' };
-});
+app.on('error', err => console.error(err));
 
-app.use(router.routes());
-
-
-
-
-const PORT = config.get('port');
-
-const server = app.listen(PORT, () => {
-  console.log(`Server runs at http://localhost:${PORT}`);
-})
-  .on('error', err => console.error(err));
-
-module.exports = server;
+module.exports = {
+  start: () => {
+    app.listen(PORT, () => {
+      console.log(`Server runs at http://localhost:${PORT}`);
+    });
+  },
+};

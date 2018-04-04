@@ -21,6 +21,7 @@
 
     xhr.open("POST", "/publish", true);
 
+    xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
     xhr.send(JSON.stringify({message: this.elements.message.value}));
 
     this.elements.message.value = '';
@@ -33,9 +34,11 @@
   function subscribe() {
     const xhr = new XMLHttpRequest();
 
-    xhr.open("GET", "/subscribe", true);
+    xhr.open("GET", "/subscribe?r=" + Math.random(), true);
 
     xhr.onload = function() {
+      if(xhr.status != 200) return this.onerror();
+
       const li = document.createElement('li');
       li.textContent = this.responseText;
       messages.appendChild(li);
@@ -47,7 +50,7 @@
       setTimeout(subscribe, 500);
     };
 
-    xhr.send('');
+    xhr.send();
   }
 
 

@@ -9,7 +9,7 @@ http.createServer((req, res) => {
   switch (req.method + ' ' + req.url) {
     case 'GET /':
     // 1. handle reading error
-    fs.createReadStream('index.html').pipe(res);
+    fs.createReadStream('./public/index.html').pipe(res);
     break;
 
     case 'GET /subscribe':

@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "aws-sdk": "*",
+    "bluebird": "^3.5.1",
     "bunyan": "*",
     "clarify": "^2.1.0",
     "co-busboy": "*",
@@ -61,7 +62,7 @@
     "randomstring": "*",
     "redis": "*",
     "request": "*",
-    "request-promise": "*",
+    "request-promise": "^4.2.2",
     "selenium-webdriver": "*",
     "should": "*",
     "socket.io": "*",
