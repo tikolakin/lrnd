@@ -31,6 +31,7 @@ afterEach((done) => {
 
 describe('chat', async () => {
   describe('webform', () => {
+    // @TODO use some webclient
     it('should serve webform', async () => {
       await request('/', opts)
         .then((res) => {
@@ -77,7 +78,38 @@ describe('chat', async () => {
       });
       expect(app.context.subscribers).to.have.lengthOf(0);
     });
-    it('should send message to all subscribers');
-    it('should reject invalid message');
+    it('should send message to all subscribers', async () => {
+      const reqUser = request('/subscribe', opts);
+      const opts1 = Object.assign(
+        {
+          method: 'POST',
+          body: {
+            message: 'keyword',
+          },
+          json: true,
+        },
+        opts,
+      );
+      await request('/publish', opts1);
+      reqUser.then((res) => {
+        res.body.should.equal('keyword');
+      });
+    });
+    it('should reject invalid message', async () => {
+      const opts1 = Object.assign(
+        {
+          method: 'POST',
+          body: {
+            message: '',
+          },
+          json: true,
+        },
+        opts,
+      );
+      await request('/publish', opts1)
+        .catch((err) => {
+          err.statusCode.should.equal(400);
+        });
+    });
   });
 });
